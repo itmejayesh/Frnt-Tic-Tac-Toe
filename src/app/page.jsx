@@ -130,7 +130,7 @@ const page = () => {
 		setPlayerName(userNameResponse);
 
 		//connect to server
-		const newSocket = io(`http://localhost:8000/`, {
+		const newSocket = io(`https://bck-tic-tac-toe.onrender.com`, {
 			autoConnect: true,
 		});
 
