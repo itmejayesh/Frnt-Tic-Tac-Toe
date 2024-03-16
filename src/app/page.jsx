@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 const {io} = require("socket.io-client");
 import Square from "../components/Square";
 import Swal from "sweetalert2";
+import VoiceChat from "@/components/VoiceChat";
 
 const renderMultiDimensionArray = [
 	[1, 2, 3],
@@ -29,6 +30,9 @@ const page = () => {
 	const [opponentName, setOpponentName] = useState(null);
 	//set playingAs state for toggling player turn
 	const [turn, setTurn] = useState(null);
+
+	const [channelName, setChannelName] = useState("jayeshGadhok");
+	const appId = "a689bc62229b466c98db4fc35b20dfa6";
 
 	//winner logic
 	const checkWinner = () => {
@@ -94,6 +98,7 @@ const page = () => {
 	});
 
 	socket?.on("OpponentFound", (data) => {
+		setChannelName(data.gameID);
 		setTurn(data.playingAs);
 		setOpponentName(data.opponentName);
 	});
@@ -129,8 +134,8 @@ const page = () => {
 		const userNameResponse = nameResponse.value;
 		setPlayerName(userNameResponse);
 
-		//connect to server
-		const newSocket = io(`https://bck-tic-tac-toe.onrender.com`, {
+		//connect to server https://bck-tic-tac-toe.onrender.com
+		const newSocket = io(`http://localhost:8000/`, {
 			autoConnect: true,
 		});
 
@@ -157,6 +162,7 @@ const page = () => {
 				>
 					Play Online
 				</button>
+				<VoiceChat channelName={channelName} appId={appId} />
 			</main>
 		);
 	}
@@ -240,12 +246,12 @@ const page = () => {
 					</h5>
 				</div>
 			)}
-			<button
+			{/* <button
 				onClick={handlePlayAgain}
 				className="bg-blue-500 text-white px-8 py-3 rounded-xl font-bold text-xl mt-5"
 			>
 				Play Again
-			</button>
+			</button> */}
 		</main>
 	);
 };
