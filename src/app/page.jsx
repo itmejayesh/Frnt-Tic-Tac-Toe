@@ -31,6 +31,8 @@ const page = () => {
 	//set playingAs state for toggling player turn
 	const [turn, setTurn] = useState(null);
 
+	const [mute, setMute] = useState(true);
+
 	const [channelName, setChannelName] = useState("jayeshGadhok");
 	const appId = "a689bc62229b466c98db4fc35b20dfa6";
 
@@ -88,36 +90,51 @@ const page = () => {
 		return response;
 	};
 
-	//We listen for the server & client events.
-	socket?.on("connect", () => {
-		setPlayOnline(true);
-	});
-
-	socket?.on("OpponentNotFound", () => {
-		setOpponentName(false);
-	});
-
-	socket?.on("OpponentFound", (data) => {
-		setChannelName(data.gameID);
-		setTurn(data.playingAs);
-		setOpponentName(data.opponentName);
-	});
-
-	socket?.on("gameStateFromServerSide", (data) => {
-		const id = data.state.id;
-		setGameState((prevS) => {
-			let newState = [...prevS];
-			const rowIndex = Math.floor(id / 3);
-			const colIndex = id % 3;
-			newState[rowIndex][colIndex] = data.state.sign;
-			return newState;
+	useEffect(() => {
+		socket?.on("connect", () => {
+			setPlayOnline(true);
 		});
-		setCurrentPlayer(data.state.sign === "circle" ? "cross" : "circle");
-	});
 
-	socket?.on("opponentLeftMatchg", () => {
-		setFinalStage("opponentLeftMatchg");
-	});
+		socket?.on("OpponentNotFound", () => {
+			setOpponentName(false);
+		});
+
+		socket?.on("OpponentFound", (data) => {
+			setChannelName(data.gameID);
+			setTurn(data.playingAs);
+			setOpponentName(data.opponentName);
+		});
+
+		socket?.on("micStateChanged", (isMuted) => {
+			setMute(isMuted);
+		});
+
+		socket?.on("gameStateFromServerSide", (data) => {
+			const id = data.state.id;
+			setGameState((prevS) => {
+				let newState = [...prevS];
+				const rowIndex = Math.floor(id / 3);
+				const colIndex = id % 3;
+				newState[rowIndex][colIndex] = data.state.sign;
+				return newState;
+			});
+			setCurrentPlayer(data.state.sign === "circle" ? "cross" : "circle");
+		});
+
+		socket?.on("opponentLeftMatchg", () => {
+			setFinalStage("opponentLeftMatchg");
+		});
+	}, [socket]);
+
+	//We listen for the server & client events.
+
+	const handleMicToggle = () => {
+		// Toggle the mute state
+		setMute(!mute);
+		console.log("handle mute is clicked");
+		// Emit mic state change to the server
+		socket?.emit("micStateChanged", newMuteState);
+	};
 
 	//handle Playonline button click
 	const handlePlayOnlineClick = async () => {
@@ -135,7 +152,7 @@ const page = () => {
 		setPlayerName(userNameResponse);
 
 		//connect to server https://bck-tic-tac-toe.onrender.com
-		const newSocket = io(`http://localhost:8000/`, {
+		const newSocket = io(`https://bck-tic-tac-toe.onrender.com`, {
 			autoConnect: true,
 		});
 
@@ -162,7 +179,6 @@ const page = () => {
 				>
 					Play Online
 				</button>
-				<VoiceChat channelName={channelName} appId={appId} />
 			</main>
 		);
 	}
@@ -179,7 +195,13 @@ const page = () => {
 		  mx-auto mx-w-[390] mt-[5vh]"
 		>
 			<div className="flex flex-col justify-center items-center overflow-hidden h-[80vh] gap-y-5">
-				<div className="flex justify-between w-full py-5">
+				<div className="flex w-full justify-evenly py-5">
+					<VoiceChat
+						channelName={channelName}
+						appId={appId}
+						mute={mute}
+						handleMicToggle={handleMicToggle}
+					/>
 					<div
 						className={`flex px-3 py-2
 						text-black text-center items-center rounded-md ${
@@ -196,6 +218,12 @@ const page = () => {
 					>
 						{opponentName}
 					</div>
+					<VoiceChat
+						channelName={channelName}
+						appId={appId}
+						mute={mute}
+						handleMicToggle={handleMicToggle}
+					/>
 				</div>
 				{/* Game Heading */}
 				<div className="bg-blue-500 px-5 py-2 my-5 rounded-lg">
