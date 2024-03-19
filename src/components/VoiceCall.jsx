@@ -65,18 +65,12 @@ const VoiceCall = ({channelName, appId, agoraEngine}) => {
 		const userIds = remoteUsers.map((user) => user.uid);
 		setAllUserIds(userIds);
 	}, [remoteUsers]);
-	console.log(mute);
+
 	const deviceLoading = isLoadingMic || isLoadingCam;
 	if (deviceLoading) return <div>Loading devices...</div>;
-	console.log(remoteUsers);
+
 	return (
 		<div className="flex justify-around h-[1vh]">
-			{audioTracks.map((track) => (
-				<>
-					<RemoteAudioTrack key={track.getUserId()} play track={track} />
-					{unMuteMic}
-				</>
-			))}
 			<LocalAudioTrack play track={localMicrophoneTrack} muted={mute ? true : false} />
 			<div className={`cursor-pointer flex justify-end `} onClick={toggleMute}>
 				{unMuteMic}
