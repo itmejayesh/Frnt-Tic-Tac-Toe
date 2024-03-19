@@ -128,13 +128,13 @@ const page = () => {
 
 	//We listen for the server & client events.
 
-	const handleMicToggle = () => {
-		// Toggle the mute state
-		setMute(!mute);
-		console.log("handle mute is clicked");
-		// Emit mic state change to the server
-		socket?.emit("micStateChanged", newMuteState);
-	};
+	// const handleMicToggle = () => {
+	// Toggle the mute state
+	// 	setMute(!mute);
+	// 	console.log("handle mute is clicked");
+	// Emit mic state change to the server
+	// 	socket?.emit("micStateChanged", newMuteState);
+	// };
 
 	//handle Playonline button click
 	const handlePlayOnlineClick = async () => {
@@ -161,10 +161,6 @@ const page = () => {
 		});
 
 		setScoket(newSocket);
-	};
-
-	const handlePlayAgain = () => {
-		location.reload();
 	};
 
 	if (!playOnline) {
@@ -196,12 +192,6 @@ const page = () => {
 		>
 			<div className="flex flex-col justify-center items-center overflow-hidden h-[80vh] gap-y-5">
 				<div className="flex w-full justify-evenly py-5">
-					<VoiceChat
-						channelName={channelName}
-						appId={appId}
-						mute={mute}
-						handleMicToggle={handleMicToggle}
-					/>
 					<div
 						className={`flex px-3 py-2
 						text-black text-center items-center rounded-md ${
@@ -218,12 +208,6 @@ const page = () => {
 					>
 						{opponentName}
 					</div>
-					<VoiceChat
-						channelName={channelName}
-						appId={appId}
-						mute={mute}
-						handleMicToggle={handleMicToggle}
-					/>
 				</div>
 				{/* Game Heading */}
 				<div className="bg-blue-500 px-5 py-2 my-5 rounded-lg">
@@ -274,12 +258,6 @@ const page = () => {
 					</h5>
 				</div>
 			)}
-			{/* <button
-				onClick={handlePlayAgain}
-				className="bg-blue-500 text-white px-8 py-3 rounded-xl font-bold text-xl mt-5"
-			>
-				Play Again
-			</button> */}
 		</main>
 	);
 };
