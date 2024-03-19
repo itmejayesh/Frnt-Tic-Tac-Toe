@@ -12,7 +12,7 @@ import {
 	RemoteAudioTrack,
 } from "agora-rtc-react";
 
-const VoiceCall = ({channelName, appId, agoraEngine, handleMicToggle}) => {
+const VoiceCall = ({channelName, appId, agoraEngine}) => {
 	const [mute, setMute] = useState(true);
 	const [allUserIds, setAllUserIds] = useState([]);
 	const remoteUsers = useRemoteUsers();
