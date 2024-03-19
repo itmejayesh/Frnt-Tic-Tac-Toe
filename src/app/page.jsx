@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {io} from "socket.io-client";
 import Square from "../components/Square";
 import Swal from "sweetalert2";
-import VoiceChat from "../components/VoiceChat";
+// import VoiceChat from "../components/VoiceChat";
 
 const renderMultiDimensionArray = [
 	[1, 2, 3],
@@ -192,13 +192,13 @@ const page = () => {
 		>
 			<div className="flex flex-col justify-center items-center overflow-hidden h-[80vh] gap-y-5">
 				<div className="flex w-full justify-evenly py-5">
-					<VoiceChat
+					{/* <VoiceChat
 						channelName={channelName}
 						appId={appId}
 						mute={mute}
 						// having bug i have to fix
 						handleMicToggle={handleMicToggle}
-					/>
+					/> */}
 					<div
 						className={`flex px-3 py-2
 						text-black text-center items-center rounded-md ${
@@ -215,12 +215,12 @@ const page = () => {
 					>
 						{opponentName}
 					</div>
-					<VoiceChat
+					{/* <VoiceChat
 						channelName={channelName}
 						appId={appId}
 						mute={mute}
 						handleMicToggle={handleMicToggle}
-					/>
+					/> */}
 				</div>
 				{/* Game Heading */}
 				<div className="bg-blue-500 px-5 py-2 my-5 rounded-lg">
