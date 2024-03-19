@@ -9,7 +9,7 @@
 		"lint": "next lint"
 	},
 	"engines": {
-		"node": "20.x"
+		"node": "18.x"
 	},
 	"dependencies": {
 		"agora-extension-ai-denoiser": "^1.1.0",
