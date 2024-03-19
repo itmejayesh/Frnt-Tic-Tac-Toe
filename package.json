@@ -8,9 +8,6 @@
 		"start": "next start",
 		"lint": "next lint"
 	},
-	"engines": {
-		"node": "18.x"
-	},
 	"dependencies": {
 		"agora-extension-ai-denoiser": "^1.1.0",
 		"agora-extension-spatial-audio": "^1.0.0-beta1",
