@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {io} from "socket.io-client";
 import Square from "../components/Square";
 import Swal from "sweetalert2";
-import VoiceChat from "@/components/VoiceChat";
+import VoiceChat from "../components/VoiceChat";
 
 const renderMultiDimensionArray = [
 	[1, 2, 3],
