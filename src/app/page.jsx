@@ -1,6 +1,6 @@
 "use client";
 import React, {useEffect, useState} from "react";
-const {io} = require("socket.io-client");
+import {io} from "socket.io-client";
 import Square from "../components/Square";
 import Swal from "sweetalert2";
 
