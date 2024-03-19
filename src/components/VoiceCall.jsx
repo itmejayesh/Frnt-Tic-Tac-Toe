@@ -22,7 +22,7 @@ const VoiceCall = ({channelName, appId, agoraEngine}) => {
 	const {videoTracks, isLoading: RemoteUserVideoLoading} = useRemoteVideoTracks(remoteUsers);
 
 	usePublish([localMicrophoneTrack]);
-	const {data} = useJoin({
+	useJoin({
 		appid: appId,
 		channel: channelName,
 		token: null,
