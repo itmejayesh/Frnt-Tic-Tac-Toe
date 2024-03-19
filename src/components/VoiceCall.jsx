@@ -1,4 +1,4 @@
-import React, {useEffect, useId, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
 	useLocalMicrophoneTrack,
 	useLocalCameraTrack,
@@ -7,13 +7,10 @@ import {
 	usePublish,
 	useJoin,
 	useRemoteVideoTracks,
-	useVolumeLevel,
 	useClientEvent,
-	LocalVideoTrack,
 	LocalAudioTrack,
 	RemoteAudioTrack,
 } from "agora-rtc-react";
-import RemoteAndLocalVolumeComponent from "./RemoteAndLocalVolumeComponent";
 
 const VoiceCall = ({channelName, appId, agoraEngine, handleMicToggle}) => {
 	const [mute, setMute] = useState(true);
